@@ -1,0 +1,32 @@
+{
+	"welcomeFile": "webapp/index.html",
+	"authenticationMethod": "none",
+	"websockets": {
+		"enabled": true
+	},
+	"routes": [{
+		"source": "/odata/(.*)",
+		"target": "/odata/$1",
+		"destination": "srv_mobile_api",
+		"authenticationType": "none"
+	},{
+		"source": "/rest/(.*)",
+		"target": "/rest/$1",
+		"destination": "srv_mobile_api",
+		"authenticationType": "none"
+	},{
+		"source": "/(.*)",
+		"localDir": "resources",
+		"authenticationType": "none",	
+		"replace": {
+			"pathSuffixes": [
+				"index.html"
+			],
+			"services": {
+				"sapui5_sb": {
+					"tag": "ui5"
+				}
+			}
+		}
+	}]
+}

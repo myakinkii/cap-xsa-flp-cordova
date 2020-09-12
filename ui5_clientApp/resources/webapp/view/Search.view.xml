@@ -1,0 +1,32 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Search" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>searchPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<IconTabBar headerMode="Inline">
+		<items>
+			<IconTabFilter text="{i18n>searchResults}: {search>/query}" key="results" _count="3">
+				<List items="{path:'search>/results', sorter:{path:'objectType',group:true}, groupHeaderFactory: '.getGroupHeaderResults'}">
+					<ObjectListItem
+						intro="{search>intro}"
+						title="{ parts:[{path:'search>title'},{path:'search>objectType'},{path:'search>typeAttribute'}], formatter:'.formatTitle' }"
+						_title="{search>title}"
+						type="Navigation"
+						press="goToResultObject"/>
+				</List>
+			</IconTabFilter>
+			<IconTabFilter text="{i18n>searchAllGyms}" key="gyms" _count="3">
+				<List growing="true" growingThreshold="5" 
+					items="{path:'odata>/Gyms', sorter:{ path:'type', group:true}, groupHeaderFactory: '.getGroupHeaderGyms' }">
+					<ObjectListItem type="Navigation" title="{odata>name}" intro="{odata>address_addressLine}" press="goToGym"/>
+				</List>				
+			</IconTabFilter>
+			<IconTabFilter text="{i18n>searchAllCoaches}" key="coaches" _count="3">
+				<List items="{path:'odata>/Coaches'}" growing="true" growingThreshold="5" > 
+					<ObjectListItem type="Navigation" title="{odata>name}" intro="{odata>nickName}" press="goToCoach"/>
+				</List>	
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+</Page>
+</mvc:View>

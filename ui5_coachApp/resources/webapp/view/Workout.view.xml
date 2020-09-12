@@ -1,0 +1,172 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Workout" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:forms="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	height="100%">
+	<ObjectPageLayout id="objectPageLayout" upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true">
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{ path:'odata>timestamp', type:'sap.ui.model.type.DateTime', formatOptions:{ style:'medium' } } @{odata>purchase/gym/name}"
+							  objectSubtitle="{odata>client/nickName}"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://appointment"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>workoutPageTitle}"/>
+						</m:contentMiddle>
+						<!--<m:contentRight>-->
+						<!--	<m:Button icon="sap-icon://tree" tooltip="tree" />-->
+						<!--	<m:Button icon="sap-icon://action" tooltip="action" />-->
+						<!--</m:contentRight>-->
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+					<m:Link text="{i18n>navPurchase}" press="goToPurchase"/>
+				</breadCrumbsLinks>				
+				<actions>
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://cancel" text="{i18n>workoutCancel}"/>-->
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://check-availability" text="{i18n>workoutReschedule}"/>-->
+					<ObjectPageHeaderActionButton icon="sap-icon://synchronize" text="{i18n>genericRefresh}" press="refreshMyElementBinding" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>	
+		
+		<headerContent>
+			<m:ObjectStatus title="{i18n>workoutStatus}" text="{path:'odata>status', formatter:'.formatWorkoutStatus' }" state="{= ${odata>status}==='E'?'Success':'Warning' }" />
+			<!--<m:ObjectNumber number="1000" numberUnit="" emphasized="true" state="Success"/>-->
+		</headerContent>
+
+		<sections>
+			
+			<ObjectPageSection id="planSection" visible="{= ${odata>purchase/type}==='O' }" titleUppercase="false" title="{i18n>workoutSectionPlan}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>workoutSectionPlan}">
+						<blocks>
+							<m:Panel>
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:Title text="{i18n>workoutSectionPlanInfo}"/>
+										<m:ToolbarSpacer />
+										<m:Button enabled="{= ${odata>purchase/quantity}>0 &amp;&amp; ${odata>status}!=='E' }"
+											icon="sap-icon://add-process" press="addExcercisePlan" />											
+									</m:OverflowToolbar>
+								</m:headerToolbar>	
+								<m:content>
+									<m:List id="excercisesListPlan"
+										mode="Delete"
+										delete="deleteExcercisePlan"
+										items="{
+											path:'odata>excercises', 
+											parameters:{expand: 'video'},
+											sorter:[
+												{ path:'exNum', descending:false, group:'.getExGroup'},
+												{ path:'setNum',descending:false},
+												{ path:'repeat',descending:false }
+											],
+											groupHeaderFactory: '.getExGroupHeader'
+										}">
+										<m:ObjectListItem
+											type="Active"
+											press="editExPlan"
+											title="{odata>name}"
+											number="#{odata>exNum}">
+											<m:ObjectAttribute text="{odata>target}" />
+											<m:ObjectAttribute text="{= ${odata>warmup} ? ${i18n>excerciseWarmup}+': '+${odata>warmup} : '' }" />
+											<m:ObjectAttribute text="{= ${odata>targetComment} ? ${i18n>excerciseTargetComment}+': '+${odata>targetComment} : '' }" />
+										</m:ObjectListItem>										
+									</m:List>
+								</m:content>
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection titleUppercase="false" title="{i18n>workoutSectionReport}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>workoutSectionReport}">
+						<blocks>
+							<m:Panel >
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:Title text="{i18n>workoutSectionReportInfo}"/>
+										<m:ToolbarSpacer />
+										<m:Button enabled="{= ${odata>purchase/quantity}>0 &amp;&amp; ${odata>status}!=='E' }"
+											visible="{= ${odata>purchase/type}==='R' }" icon="sap-icon://add" press="addExcerciseReport" />
+									</m:OverflowToolbar>
+								</m:headerToolbar>	
+								<m:content>
+									<m:List id="excercisesListReport"
+										mode="{= ${odata>purchase/type}==='R'?'Delete':'None' }"
+										delete="deleteExcerciseReport"
+										items="{
+											path:'odata>excercises', 
+											parameters:{expand: 'video'},
+											sorter:[
+												{ path:'exNum', descending:false, group:'.getExGroup'},
+												{ path:'setNum',descending:false},
+												{ path:'repeat',descending:false }
+											],
+											groupHeaderFactory: '.getExGroupHeader'
+										}">
+										<m:ObjectListItem
+											type="Active"
+											press="editExReport"
+											title="{odata>name}"
+											number="#{odata>exNum}">
+											<m:ObjectAttribute text="{odata>result}" />
+											<m:ObjectAttribute text="{= ${odata>resultComment} ? ${i18n>excerciseResultComment}+': '+${odata>resultComment} : '' }" />
+										</m:ObjectListItem>										
+									</m:List>
+								</m:content>
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			
+			<ObjectPageSection titleUppercase="false" title="{i18n>workoutSectionComment}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>workoutSectionComment}">
+						<blocks> 
+							<m:Panel>
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:RatingIndicator 
+											maxValue="5"
+											class="sapUiSmallMarginBottom"
+											change="changeRating"
+											enabled="false"
+											value="{odata>rating}" />
+										<!--<m:Title text="{i18n>workoutSectionCommentInfo}"/>-->
+										<m:ToolbarSpacer />
+										<m:Button  visible="false" icon="sap-icon://save" press="submitComment" />
+									</m:OverflowToolbar>
+								</m:headerToolbar>	
+								<m:content>
+									<m:TextArea 
+										rows="5" 
+										width="100%" 
+										enabled="false" 
+										value="{odata>comment_text}" />
+									</m:content>
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>	
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,125 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Purchase" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:forms="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	height="100%">
+	<ObjectPageLayout id="objectPageLayout" upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true">
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{odata>owner/nickName} @{odata>gym/name}"
+							  objectSubtitle="{path:'odata>type', formatter:'.formatPurchaseType' }"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://activities"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>purchasePageTitle}"/>
+						</m:contentMiddle>
+						<!--<m:contentRight>-->
+						<!--	<m:Button icon="sap-icon://tree" tooltip="tree" />-->
+						<!--	<m:Button icon="sap-icon://action" tooltip="action" />-->
+						<!--</m:contentRight>-->
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+					<m:Link text="{i18n>navGym}" press="goToGym"/>
+					<!--<m:Link text="Purchase" press="goToPurchase"/>-->
+				</breadCrumbsLinks>					
+				<actions>
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://credit-card" text="{i18n>purchaseAddPayment}" />-->
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://fob-watch" text="{i18n>purchaseSuspend}" />-->
+					<ObjectPageHeaderActionButton icon="sap-icon://synchronize" text="{i18n>genericRefresh}" press="refreshMyElementBinding" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>
+		
+		<headerContent>
+			<m:ObjectNumber number="{odata>cost}" numberUnit="{i18n>purchaseCurrency}" emphasized="false" _state="Success"/>
+			<m:ObjectStatus text="{path:'odata>state', formatter:'.formatPurchaseState' }" state="{= ${odata>state}==='A'?'Success':'Error' }" />
+			<m:ObjectStatus 
+				visible="{= ${odata>type}==='O' }"
+				text="{i18n>purchaseOnlineExpires} { path:'odata>expirationDate', type:'sap.ui.model.type.Date', formatOptions:{ style:'medium' } }"
+				state="Success" />
+			<m:ObjectNumber 
+				visible="{= ${odata>type}!=='O' }" 
+				number="{odata>quantity}" 
+				numberUnit="{i18n>purchaseQuantity_R}" 
+				emphasized="true" state="{= ${odata>quantity}>0? 'Success':'Error' }"/>
+		</headerContent>
+
+		<sections>
+			
+			<ObjectPageSection id="workouts" titleUppercase="false" title="{i18n>purchaseSectionWorkouts}" >
+				<subSections>
+					<ObjectPageSubSection title="{i18n>purchaseSectionWorkouts}">
+						<blocks>
+							<m:Panel>
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:Title text="{i18n>purchaseSectionWorkoutsList}"/>
+										<m:ToolbarSpacer />
+										<!--<m:Button icon="sap-icon://add" enabled="{= ${odata>state} ==='A' }" press="createWorkout" />-->
+									</m:OverflowToolbar>
+								</m:headerToolbar>
+								<m:content>
+									<m:List 
+										growing="true"
+										growingThreshold="3"
+										items="{path:'odata>workouts', sorter:{path:'odata>createdAt', descending:true} }">
+										<m:ObjectListItem type="Navigation" press="goToWorkout" 
+											title="{ 
+												path:'odata>timestamp', 
+												type:'sap.ui.model.type.DateTime', 
+												formatOptions:{ style:'medium' } 
+											}" >
+											<m:firstStatus>
+												<m:ObjectStatus
+													text="{ path:'odata>status', formatter:'.formatWorkoutStatus' }"
+													state="{= ${odata>status}==='E'?'Success':'Warning' }" />
+											</m:firstStatus>
+											<m:ObjectAttribute text="{odata>client/nickName}"  />
+										</m:ObjectListItem>
+									</m:List>
+								</m:content>
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection id="chat" titleUppercase="false" title="{i18n>purchaseSectionChat}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>purchaseSectionChat}">
+						<blocks>
+							<m:Panel>
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:Title text="{i18n>purchaseSectionChatMessages}"/>
+										<m:ToolbarSpacer />
+										<m:Button icon="sap-icon://paper-plane" enabled="{= ${odata>state} ==='A' }" press="sendMessage" />
+									</m:OverflowToolbar>
+								</m:headerToolbar>			
+								<m:content>
+									<m:TextArea  value="{/chatMessage}" width="100%" enabled="{= ${odata>state} ==='A' }" />
+									<core:Fragment fragmentName="ru.fitrepublic.shared.fragments.ChatMessages" type="XML" />
+								</m:content>
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

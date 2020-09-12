@@ -1,0 +1,59 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Profile" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+<Page title="{i18n>profilePageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<content>
+	
+		<Panel>
+			<List headerText="{i18n>profileSettingsList}" >
+				
+				<GroupHeaderListItem title="{i18n>profilePersonalGroup}" />
+				
+				<InputListItem label="{i18n>profileNickName}">
+					<Input width="15rem" value="{/profile/nickName}" />
+				</InputListItem>
+				<InputListItem label="{i18n>profileAge}" >
+					<Input width="15rem" value="{path:'/profile/age', type: 'sap.ui.model.type.Integer'}" />
+				</InputListItem>				
+				
+				<GroupHeaderListItem title="{i18n>profileCardsGroup}" />
+
+				<InputListItem label="{i18n>profileSearchAndPromoCard}">
+					<Switch state="{/cards/searchAndPromo}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem label="{i18n>profileCalendarCard}">
+					<Switch state="{/cards/calendar}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem label="{i18n>profileChatMessagesCard}">
+					<Switch state="{/cards/chatMessages}" change="toggleHiddenCards"/>
+				</InputListItem>				
+				<InputListItem label="{i18n>profilePurchasesCard}">
+					<Switch state="{/cards/purchaseList}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem label="{i18n>profileProfileCard}">
+					<Switch state="true" enabled="false" />
+				</InputListItem>
+				
+				<GroupHeaderListItem title="{i18n>profileThemeGroup}" />
+				<InputListItem label="{i18n>profileDarkTheme}">
+					<Switch state="{/darkTheme}" change="toggleDarkTheme" />
+				</InputListItem>				
+			</List>
+		</Panel>
+
+		<!--<Panel headerText="QR" expandable="true" expanded="false" >-->
+		<!--	<core:HTML content='&lt;div style=&quot;width:100%;height:250px;&quot; id=&quot;qrcode&quot;&gt; &lt;/div&gt;'/>-->
+		<!--</Panel>-->
+		
+	</content>
+	<footer>
+		<Toolbar>
+			<Button type="Reject" icon="sap-icon://reset" text="{i18n>profileReset}" press="resetProfile" />
+			<ToolbarSpacer />
+			<Button _type="Reject" icon="sap-icon://save" text="{i18n>genericSave}" press="updateProfile" />
+		</Toolbar>
+	</footer>
+</Page>
+</mvc:View>

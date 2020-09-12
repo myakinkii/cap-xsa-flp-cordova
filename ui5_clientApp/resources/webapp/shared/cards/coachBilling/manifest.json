@@ -1,0 +1,71 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.coachBilling",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				},
+				"targetValue": {
+					"value": 50000,
+					"type": "integer",
+					"label": "Weekly target",
+					"description": "Defines how much money I need to earn."
+				}			
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"type": "Numeric",
+			"data": {
+				"request": {
+					"url": "{{destinations.odata}}/MyMoney?device={{parameters.deviceId}}&token={{parameters.authToken}}"
+				},
+				"path": "/d/results/0"
+			},
+			"unitOfMeasurement": "{i18n>purchaseCurrency}",
+			"mainIndicator": {
+				"number": "{= format.integer(${money}, {groupingEnabled:true, style:'medium'}) }",
+				"unit": "",
+				"trend": "Up",
+				"state": "Good"
+			},
+			"sideIndicators": [
+				{
+					"title": "{i18n>billingTarget}",
+					"unit": "{i18n>purchaseCurrency}",
+					"number": "{target}",
+					"__number": "{= format.integer(${target}, {style:'short'}) }",
+					"_number": "{= format.integer({{parameters.targetValue}}, {style:'short'}) }"
+				}
+			],
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"money"}
+				}
+			]
+		}
+	}
+}

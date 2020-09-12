@@ -1,0 +1,68 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.profile",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "Object",
+		"data": {
+			"extension": {
+				"method": "getData"
+			}
+		},
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				}
+			}
+		},		
+		"header": {
+			"icon": {
+				"text": "{= extension.formatters.toIconTextNickName(${nickName}) }"
+			},
+			"title": "{nickName}",
+			"_subTitle": "{age}",
+			"actions": [
+				{
+					"type": "Custom",
+					"parameters": { "dst":"profile"}
+				}
+			]
+		},
+		"content": {
+			"groups": [
+				{
+					"title": "{i18n>sectionInfo}",
+					"items": [
+						{
+							"label": "{i18n>infoAge}",
+							"value": "{age}",
+							"type": "text"
+						},
+						{
+							"label": "{i18n>infoDeviceId}",
+							"value": "{deviceId}",
+							"type": "text"
+						}						
+					]
+				}				
+			]
+		}
+	}
+}

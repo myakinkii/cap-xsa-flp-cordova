@@ -1,0 +1,24 @@
+{
+	"authenticationMethod": "none",
+	"routes": [{
+		"source": "^/coaches/(.*)$",
+		"target": "$1",
+		"destination": "ui_fe_coaches_dst"
+	},{
+		"source": "^/gyms/(.*)$",
+		"target": "$1",
+		"destination": "ui_fe_gyms_dst"
+	},{
+		"source": "^/purchases/(.*)$",
+		"target": "$1",
+		"destination": "ui_fe_purchases_dst"
+	},{
+		"source": "^/settings/(.*)$",
+		"target": "$1",
+		"destination": "ui_fe_settings_dst"
+	},{
+		"source": "/v2/(.*)",
+		"target": "/v2/$1",
+		"destination": "srv_dst"
+	}]
+}

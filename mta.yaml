@@ -1,0 +1,210 @@
+ID: fitrepublic
+_schema-version: "2.1"
+version: 0.1.0
+modules:
+  - name: fitrepublic-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: fitrepublic-db-hdi-container
+
+  - name: fitrepublic-srv-mobile
+    type: nodejs
+    path: srv_mobile
+    provides:
+     - name: srv_mobile_api
+       properties:
+          url: ${default-url}
+    requires:
+      - name: fitrepublic-db-hdi-container
+
+  - name: ui5_clientApp
+    type: html5
+    path: ui5_clientApp
+    requires:
+      - name: ui5_160
+      - name: srv_mobile_api
+        group: destinations
+        properties:
+          name: srv_mobile_api
+          url: '~{url}'
+
+  - name: ui5_coachApp
+    type: html5
+    path: ui5_coachApp
+    requires:
+      - name: ui5_160
+      - name: srv_mobile_api
+        group: destinations
+        properties:
+          name: srv_mobile_api
+          url: '~{url}'
+
+  - name: fitrepublic-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: fitrepublic-db-hdi-container
+
+  - name: ui5_fe
+    type: html5
+    path: ui5_fe
+    requires:
+      - name: ui5_160
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+
+  - name: ui_fe_coaches
+    type: html5
+    path: ui_fe_coaches
+    requires:
+      - name: ui5_160
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+    provides:
+      - name: ui_fe_coaches_ref
+        properties:
+          url: '${default-url}'
+
+  - name: ui_fe_gyms
+    type: html5
+    path: ui_fe_gyms
+    requires:
+      - name: ui5_160
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+    provides:
+      - name: ui_fe_gyms_ref
+        properties:
+          url: '${default-url}'
+
+  - name: ui_fe_purchases
+    type: html5
+    path: ui_fe_purchases
+    requires:    
+      - name: ui5_160
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+    provides:
+      - name: ui_fe_purchases_ref
+        properties:
+          url: '${default-url}'
+
+  - name: ui_fe_settings
+    type: html5
+    path: ui_fe_settings          
+    requires:    
+      - name: ui5_160
+      - name: srv_api
+        group: destinations
+        properties:
+          name: srv_api
+          url: '~{url}'
+    provides:
+      - name: ui_fe_settings_ref
+        properties:
+          url: '${default-url}'
+
+  - name: flp-fitrepublic
+    type: siteentry
+    path: flp
+    parameters:
+       memory: 64M
+    requires:
+     - name: sap-portal-services-host-fitrepublic
+     - name: portal-uaa-fitrepublic
+     - name: sapui5-provider
+       properties:
+          sapui5url: ~{url}
+     - name: srv_api
+       group: destinations
+       properties:
+         name: srv_dst
+         url: '~{url}'  
+     - name: ui_fe_coaches_ref
+       group: destinations
+       properties:
+         name: ui_fe_coaches_dst
+         url: '~{url}'
+     - name: ui_fe_gyms_ref
+       group: destinations
+       properties:
+         name: ui_fe_gyms_dst
+         url: '~{url}'
+     - name: ui_fe_purchases_ref
+       group: destinations
+       properties:
+         name: ui_fe_purchases_dst
+         url: '~{url}'
+     - name: ui_fe_settings_ref
+       group: destinations
+       properties:
+         name: ui_fe_settings_dst
+         url: '~{url}'
+
+  - name: flp-Content-fitrepublic
+    type: sitecontent
+    path: flp-Content
+    parameters:
+       memory: 32M
+    requires:
+     - name: sap-portal-services-client-fitrepublic
+     - name: portal-uaa-fitrepublic
+
+resources:
+  - name: fitrepublic-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+
+  - name: portal-uaa-fitrepublic
+    type: com.sap.xs.uaa
+    parameters:
+       service-plan: space
+
+  - name: sap-portal-services-host-fitrepublic
+    type: com.sap.portal.site-host
+    parameters:
+       config:
+          siteId: fitrepublic
+
+  - name: sap-portal-services-client-fitrepublic
+    type: com.sap.portal.site-content
+    parameters:
+       config:
+          siteId: fitrepublic
+
+  - name: ui5_160
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: sapui5_sb
+      service-plan: sapui5-1.60
+
+  - name: sapui5-provider
+    type: configuration
+    parameters:
+       provider-id: com.sap.ui5.dist.sapui5-dist-xsa.XSAC_UI5_FESV5:sapui5_fesv5
+       version: '>=1.60.0'
+       provider-nid: mta

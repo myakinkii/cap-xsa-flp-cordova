@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<!--<SelectDialog title="Select option" items="{/options}" confirm="confirmPurchase" cancel="cancelPurchase">-->
+	<!--	<StandardListItem-->
+	<!--		title="{title}"-->
+	<!--		description="{description}"-->
+	<!--		icon=""-->
+	<!--		iconDensityAware="false"-->
+	<!--		iconInset="false"-->
+	<!--		type="Active" />-->
+	<!--</SelectDialog>-->
+	<Dialog>
+		<Text class="sapUiSmallMargin" text="{/purchaseDescription}" />
+		<List items="{/options}" mode="SingleSelect" >
+			<StandardListItem selected="{selected}" title="{title}" description="{description}"/>
+		</List>
+		<beginButton>
+			<Button text="{i18n>genericConfirm}" type="Emphasized" />
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

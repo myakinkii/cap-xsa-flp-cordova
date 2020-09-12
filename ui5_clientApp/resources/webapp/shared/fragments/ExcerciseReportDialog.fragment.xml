@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>workoutReportExDlgTitle}">
+		<beginButton>
+			<Button text="{i18n>genericSave}" type="Emphasized" press="submitChanges"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" press="closeDlg"/>
+		</endButton>
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+				<Label text="{i18n>excerciseName}" />
+				<Input value="{odata>name}" enabled="false" />
+				<Label text="{i18n>excerciseTarget}" />
+				<Input value="{odata>target}" enabled="false" />
+				<Label required="true" text="{i18n>excerciseResult}" />
+				<Input fieldGroupIds="required" change="validateForm"
+					value="{path:'odata>result', type:'sap.ui.model.type.String', constraints:{minLength:5} }" />
+				<Label text="{i18n>excerciseResultComment}" />
+				<Input value="{odata>resultComment}" enabled="{profile>/isCoach}"/>
+			</f:SimpleForm>
+		</VBox>
+	</Dialog>
+</core:FragmentDefinition>

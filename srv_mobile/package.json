@@ -1,0 +1,28 @@
+{
+    "name": "fitrepublic-srv-mobile",
+    "description": "Added manually",
+    "version": "1.0.0",
+    "dependencies": {
+        "@sap/cds": "^3.34.2",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.33",
+        "express": "^4.17.1",
+        "uuid": "^8.2.0",
+        "@sap/hana-client": "^2.5.86"
+    },
+    "engines": {
+        "node": "^10 || ^12"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node index.js"
+    },
+    "private": true,
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "hana",
+                "model": "gen/csn.json"
+            }
+        }
+    }
+}

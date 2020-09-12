@@ -1,0 +1,95 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.purchaseList",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"data": {
+			"request": {
+				"url": "{{destinations.odata}}/MyActivePurchases?device={{parameters.deviceId}}&token={{parameters.authToken}}&$orderby=purchaseDate desc&$inlinecount=allpages&$filter=state eq {{filters.state}}"
+			}
+		},
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				},
+				"maxItems": {
+					"value": 5,
+					"type": "integer",
+					"label": "Maximum number of items",
+					"description": "Defines how many items will be displayed at most."
+				}
+			},
+			"filters":{
+				"state": {
+					"value": "'A'",
+					"type": "string",
+					"label": "Purchase state filter operator",
+					"description": "Defines odata request operator",
+					"items":  [
+					    {
+							"title": "{i18n>stateActive}",
+							"key": "'A'"
+						},
+						{
+							"title": "{{stateInactive}}",
+							"key": "'I'"
+						}
+					]
+				}
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"status": {
+				"text": "{parameters>/visibleItems} of {/d/__count}"
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"purchases"}
+				}
+			]
+		},
+		"content": {
+			"data": { "path": "/d/results" },
+			"maxItems": "{{parameters.maxItems}}",
+			"item": {
+				"highlight": "{= extension.formatters.toHighlight( ${type}, ${state} ) }",
+				"title": "{= format.dateTime( ${purchaseDate}, {format: 'yMMMd'} ) }",
+				"description": "{= extension.formatters.toDescription( ${type}, ${displayName}, ${gymName} ) }",
+				"icon": { "src": "{= extension.formatters.toIcon( ${type}, ${state} ) }" },
+				"info": {
+					"value": "{= extension.formatters.toInfoValue( ${type}, ${state}, ${quantity} ) }",
+					"state": "{= extension.formatters.toInfoState( ${type}, ${state} ) }"
+				},
+				"actions": [
+					{
+						"type": "Custom",
+						"enabled": true,
+						"parameters" :{ "dst":"purchase","vars":{"id":"{id}"} }
+					}
+				]					
+			}
+		}
+	}
+}

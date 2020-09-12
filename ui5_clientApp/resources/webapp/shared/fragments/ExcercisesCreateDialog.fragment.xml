@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>workoutCreateExDlgTitle}">
+		<beginButton>
+			<Button text="{i18n>genericOK}" type="Emphasized" press="saveExcercises"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" press="closeDlg"/>
+		</endButton>
+		<Carousel id="carousel" loop="true" pageIndicatorPlacement="Top" arrowsPlacement="PageIndicator"  />
+	</Dialog>
+</core:FragmentDefinition>

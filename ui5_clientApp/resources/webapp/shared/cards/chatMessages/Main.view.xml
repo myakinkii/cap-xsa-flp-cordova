@@ -1,0 +1,92 @@
+<mvc:View controllerName="ru.fitrepublic.cards.chatMessages.Main" 
+	xmlns:my="ru.fitrepublic.controls.comp"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<ComboBox
+		width="100%"
+		showSecondaryValues= "true"
+		filterSecondaryValues= "true"
+		selectedKey="{/selectedChannel}"
+		change="switchChannel"
+		items="{
+			path: '/channels',
+			sorter: { path: 'gymName' }
+		}">
+		<core:ListItem key="{channelId}" text="{displayName} @{gymName}" additionalText="{gymName}"/>
+	</ComboBox>
+
+	<List id="messagesList" width="100%" items="{messages}">
+		<infoToolbar>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button width="100%" type="Transparent" icon="sap-icon://paper-plane" press="navToPurchaseChat" />
+				<ToolbarSpacer/>
+			</Toolbar>
+		</infoToolbar>
+		<CustomListItem width="100%">
+			<HBox>
+				<core:Icon size="2rem" src="sap-icon://employee" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+				<VBox class="sapUiSmallMarginBegin" >
+					<HBox>
+						<Title text="{ 
+							path:'message_authorId', formatter:'.formatAuthor' 
+						} @{ 
+							path:'message_timestamp', 
+							type:'sap.ui.model.type.DateTime', 
+							formatOptions:{ style:'short' }
+						}" class="sapUiSmallMarginTop"/>
+						<core:Icon src="sap-icon://accept" class="sapUiTinyMarginBegin sapUiSmallMarginTop" color="Marker" /> 
+					</HBox>	
+					<MessageStrip _type="Success"
+						customIcon="sap-icon://accept"
+						text="{ path:'message_text', formatter:'.decodeText' }"
+						enableFormattedText="true"
+						showIcon="true"
+						showCloseButton="false">
+					</MessageStrip>
+				</VBox>
+			</HBox>
+		</CustomListItem>
+	</List>
+	
+	<!--<List id="messagesList"-->
+	<!--	width="100%" -->
+	<!--	growing="true"-->
+	<!--	growingThreshold="3"-->
+	<!--	items="{ path:'odata>messages', sorter:{path:'odata>message_timestamp',descending:true} }">-->
+	<!--	<infoToolbar>-->
+	<!--		<Toolbar>-->
+	<!--			<ToolbarSpacer/>-->
+	<!--			<Button width="100%" type="Transparent" icon="sap-icon://paper-plane" press="navToPurchaseChat" />-->
+	<!--			<ToolbarSpacer/>-->
+	<!--		</Toolbar>-->
+	<!--	</infoToolbar>-->
+	<!--	<CustomListItem width="100%">-->
+	<!--		<HBox>-->
+	<!--			<core:Icon size="2rem" src="sap-icon://employee" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />-->
+	<!--			<VBox class="sapUiSmallMarginBegin" >-->
+	<!--				<HBox>-->
+	<!--					<Title text="{ -->
+	<!--						path:'odata>message_authorId', formatter:'.formatAuthor' -->
+	<!--					} @{ -->
+	<!--						path:'odata>message_timestamp', -->
+	<!--						type:'sap.ui.model.type.DateTime', -->
+	<!--						formatOptions:{ style:'short' }-->
+	<!--					}" class="sapUiSmallMarginTop"/>-->
+	<!--					<core:Icon src="sap-icon://accept" class="sapUiTinyMarginBegin sapUiSmallMarginTop" color="Marker" /> -->
+	<!--				</HBox>	-->
+	<!--				<MessageStrip _type="Success"-->
+	<!--					customIcon="sap-icon://accept"-->
+	<!--					text="{ path:'odata>message_text', formatter:'.decodeText' }"-->
+	<!--					enableFormattedText="true"-->
+	<!--					showIcon="true"-->
+	<!--					showCloseButton="false">-->
+	<!--				</MessageStrip>-->
+	<!--			</VBox>-->
+	<!--		</HBox>-->
+	<!--	</CustomListItem>-->
+	<!--</List>-->
+
+</mvc:View>

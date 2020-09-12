@@ -1,0 +1,104 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Coach" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:forms="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	height="100%">
+	<ObjectPageLayout upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true">
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{odata>name}"
+							  objectSubtitle="{odata>nickName}"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://employee"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>coachPageTitle}"/>
+						</m:contentMiddle>
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+				</breadCrumbsLinks>					
+				<actions>
+					<ObjectPageHeaderActionButton icon="sap-icon://money-bills" text="{i18n>purchaseBuy}" press="makePurchase"/>
+					<ObjectPageHeaderActionButton icon="sap-icon://synchronize" text="{i18n>genericRefresh}" press="refreshMyElementBinding" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>
+
+		<sections>
+
+			<ObjectPageSection titleUppercase="false" title="{i18n>coachSectionDescription}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>coachSectionDescriptionBio}">
+						<m:Text text="{odata>bio}" />
+					</ObjectPageSubSection>
+					
+					<!--<ObjectPageSubSection title="{i18n>coachSectionDescriptionActivities}">-->
+					<!--	<blocks>-->
+					<!--	</blocks>-->
+					<!--</ObjectPageSubSection>-->
+				</subSections>
+			</ObjectPageSection>
+			
+			<ObjectPageSection titleUppercase="false" title="{i18n>coachSectionGyms}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>coachSectionGyms}" >
+						<blocks>
+							<m:List 
+								mode="SingleSelectLeft"
+								selectionChange="selectGym"
+								items="{ 
+									path:'odata>gyms', 
+									parameters:{expand: 'gym'},
+									sorter:{path:'gym/type',group:true},
+									groupHeaderFactory: '.getGroupHeader'
+								}">
+								<m:ObjectListItem intro="{odata>gym/address_addressLine}" title="{odata>gym/name}" type="Navigation" press="goToGym" />
+							</m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>			
+			
+			<ObjectPageSection titleUppercase="false" title="{i18n>coachSectionMaterials}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>coachSectionMaterialsVideos}">
+						<blocks>
+							<m:List 
+								growing="true"
+								growingThreshold="10"
+								items="{
+									path:'odata>content',
+									filters:[{path:'contentType', operator: 'EQ', value1: 'V'}],
+									sorter:{path:'createdAt',descending:true}
+								}">
+								<m:CustomListItem>
+									<m:HBox>
+										<core:Icon size="2rem" src="sap-icon://video" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+										<m:VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+											<m:Link text="{odata>title}" press="contentPress"/>
+											<m:Text text="{odata>description}"/>
+										</m:VBox>
+									</m:HBox>
+								</m:CustomListItem>								
+								<!--<m:ObjectListItem _intro="{odata>description}" title="{odata>title}" type="Active" press="contentPress" />-->
+							</m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>	
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

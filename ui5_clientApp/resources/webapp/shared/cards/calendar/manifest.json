@@ -1,0 +1,100 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.calendar",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "Calendar",
+		"data": {
+			"extension": {
+				"method": "getData"
+			}
+		},
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				},
+				"currDate": {
+					"value": null,
+					"type": "date",
+					"label": "Current date param",
+					"description": "Defines start date for calendar"
+				}				
+			}
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"status": {
+				"text":  {
+					"format": {
+						"translationKey": "i18n>CARD.COUNT_X_OF_Y",
+						"parts": [
+							"parameters>/visibleItems",
+							"parameters>/allItems"
+						]
+					}
+				}
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"parameters":{ "dst":"schedule" }
+				}
+			]				
+		},
+		"content": {
+			"date": "{/currDate}",
+			"maxItems": 5,
+			"maxLegendItems": 4,
+			"noItemsText": "{{calendarNoItemsForDay}}",
+			"item": {
+				"path": "/items",
+				"template": {
+					"startDate": "{start}",
+					"endDate": "{end}",
+					"visualization": "{visualization}",
+					"title": "{= extension.formatters.toTitle( ${itemStatus}, ${purchaseType}) }",
+					"text": "{= extension.formatters.toText( ${itemStatus}, ${client}, ${coach}, ${gym}) }",
+					"icon": { "src": "{= extension.formatters.toIcon( ${itemStatus}, ${purchaseType}) }" },
+					"type": "{= extension.formatters.toType( ${itemStatus}, ${purchaseType}) }"
+				}
+			},
+			"legendItem": {
+				"path": "/legendItems",
+				"template": {
+					"category": "{category}",
+					"text": "{text}",
+					"type": "{type}"
+				}
+			},
+			"specialDate": {
+				"path": "/specialDates",
+				"template": {
+					"startDate": "{start}",
+					"endDate": "{end}",
+					"type": "{type}"
+				}
+			},			
+			"moreItems": {
+				"actions": [ { "type": "Custom", "parameters" :{ "dst":"schedule"} } ]
+			}
+		}
+	}
+}

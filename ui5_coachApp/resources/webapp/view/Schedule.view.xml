@@ -1,0 +1,35 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Schedule" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:unified="sap.ui.unified"
+	displayBlock="true">
+<Page title="{i18n>scheduleTitle}" showNavButton="true" navButtonPress="navBack" >
+	<SinglePlanningCalendar 
+		title="{i18n>scheduleSubTitle}" 
+		startDate="{/startDate}" 
+		appointments="{/appointments}"
+		fullDay="false"
+		startHour="6"
+		endHour="24"
+		appointmentSelect="selectItem">
+		<views>
+			<SinglePlanningCalendarDayView key="DayView" title="{i18n>scheduleDayView}" />
+			<SinglePlanningCalendarWeekView key="WeekView" title="{i18n>scheduleWeekView}" />
+			<SinglePlanningCalendarMonthView key="MonthView" title="{i18n>scheduleMonthView}" />
+		</views>
+		<actions>
+			<!--<Button icon="sap-icon://add" text="{i18n>scheduleAddUnavailable}" press="addUnavailable"/>-->
+		</actions>			
+		<appointments>
+			<unified:CalendarAppointment
+				title= "{title}"
+				text= "{text}"
+				type= "{type}"
+				icon= "{icon}"
+				startDate= "{startDate}"
+				endDate= "{endDate}">
+			</unified:CalendarAppointment>
+		</appointments>
+	</SinglePlanningCalendar>
+</Page>
+</mvc:View>

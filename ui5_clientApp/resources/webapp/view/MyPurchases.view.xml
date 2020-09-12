@@ -1,0 +1,47 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.MyPurchases" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>mypurchasesPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+
+	<List id="purchasesList"
+		growing="true" 
+		growingThreshold="10"
+		items="{ 
+			path:'odata>/MyActivePurchases', 
+			_parameters:{expand: 'gym'},
+			sorter:{path:'gymName',group:true},
+			groupHeaderFactory: '.getGroupHeader'
+		}">
+		<ObjectListItem
+			title="{odata>displayName} @{odata>gymName}"
+			number="{odata>quantity}"
+			numberUnit="{path:'odata>type', formatter:'.formatUnit' }"
+			type="Navigation" 
+			press="goToPurchase">
+			<firstStatus>
+				<ObjectStatus
+					text="{ path:'odata>state', formatter:'.formatState' }"
+					state="{= ${odata>state}==='A'?'Success':'Error' }" />
+			</firstStatus>
+			<ObjectAttribute text="{ path:'odata>type', formatter:'.formatType' }" />
+		</ObjectListItem>
+	</List>	
+
+</Page>
+</mvc:View>

@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>workoutAddDlgTitle}">
+		<beginButton>
+			<Button text="{i18n>genericOK}" type="Emphasized" press="confirmDate"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" press="closeDlg"/>
+		</endButton>
+		<l:VerticalLayout class="sapUiContentPadding" width="100%">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" singleContainerFullSize="false">
+				<Label text="{i18n>workoutPurchase}" />
+				<Select visible="{/showPurchases}" selectedKey="{/selectedPurchase}"
+					items="{path:'odata>/MyActivePurchases',filters:[{path:'state', operator: 'EQ', value1: 'A'}] }">
+					<core:Item key="{odata>id}" text="{odata>quantity} x {odata>displayName} @{odata>gymName}" />
+				</Select>
+				<Label text="{i18n>workoutDate}" />
+				<Input value="{ path:'/timestamp', type:'sap.ui.model.type.Date', formatOptions:{ style:'medium' } }" enabled="false" />
+				<Label text="{i18n>workoutTime}" />
+				<TimePicker value="{/time}" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="60" required="true" />
+				<!--<DateTimePicker value="{/timestamp}" required="true" />-->
+			</f:SimpleForm>
+			<u:Calendar showWeekNumbers="false" firstDayOfWeek="1" select="handleCalendarSelect" />			
+		</l:VerticalLayout>
+	</Dialog>
+</core:FragmentDefinition>

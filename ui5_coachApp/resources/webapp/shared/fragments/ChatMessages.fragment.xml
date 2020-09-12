@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core">
+	<List width="100%"
+		growing="true"
+		growingThreshold="10"
+		items="{ path:'odata>chatChannel/messages', sorter:{path:'odata>message_timestamp',descending:true} }">
+		<CustomListItem width="100%">
+			<HBox>
+				<core:Icon size="2rem" src="sap-icon://employee" class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+				<VBox class="sapUiSmallMarginBegin" >
+					<HBox>
+						<Title text="{ 
+							path:'odata>message_authorId', formatter:'.formatAuthor' 
+						} @{ 
+							path:'odata>message_timestamp', 
+							type:'sap.ui.model.type.DateTime', 
+							formatOptions:{ style:'short' }
+						}" class="sapUiSmallMarginTop"/>
+						<core:Icon src="sap-icon://accept" class="sapUiTinyMarginBegin sapUiSmallMarginTop" color="Marker" /> 
+					</HBox>	
+					<MessageStrip _type="Success"
+						customIcon="sap-icon://accept"
+						text="{ path:'odata>message_text', formatter:'.decodeText' }"
+						enableFormattedText="true"
+						showIcon="true"
+						showCloseButton="false">
+					</MessageStrip>
+				</VBox>
+			</HBox>
+		</CustomListItem>
+	</List>
+</core:FragmentDefinition>

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:smartfilterbar="sap.ui.comp.smartfilterbar" xmlns="sap.m">
+  <smartfilterbar:ControlConfiguration 
+		groupId="_BASIC" 
+		index="1" 
+		mandatory="mandatory"
+		key="ViewMode" 
+		label="{@i18n>onboardedFilter}" 
+		visibleInAdvancedArea="false">
+  <smartfilterbar:customControl>
+            <Select selectedKey="N" id="idViewModeSelect" change="onFilerOnboarded">
+                <core:Item key="Y" text="{@i18n>onboardedYES}"/>
+                <core:Item key="N" text="{@i18n>onboardedNO}"/>
+            </Select>
+  </smartfilterbar:customControl>
+  </smartfilterbar:ControlConfiguration>  
+</core:FragmentDefinition>

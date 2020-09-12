@@ -1,0 +1,112 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.coachList",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"data": {
+			"request": {
+				"url": "{{destinations.odata}}/Profiles?token={{parameters.authToken}}&$orderby=deviceId asc&$inlinecount=allpages",
+				"_url": "{{destinations.odata}}/Books?token={{parameters.authToken}}&$filter=stock {{parameters.stock}} {{parameters.stockTreshold}}&$orderby=ID desc&$inlinecount=allpages"
+			}
+		},
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				},
+				"maxItems": {
+					"value": 5,
+					"type": "integer",
+					"label": "Maximum number of items",
+					"description": "Defines how many items will be displayed at most."
+				},
+				"stockTreshold": {
+					"value": 50,
+					"type": "integer",
+					"label": "Filter and formatter",
+					"description": "Defines how many items will be filtered or highlighted."
+				},				
+				"stock": {
+					"value": "gt",
+					"type": "string",
+					"label": "stock filter operator",
+					"description": "Defines odata request operator",
+					"filter": {
+						"items":  [
+						    {
+								"title": "Low",
+								"key": "le"
+							},
+							{
+								"title": "High",
+								"key": "gt"
+							}
+						]
+					}
+				}
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"status": {
+				"text": "{parameters>/visibleItems} of {/d/__count}"
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"coachList"}
+				}
+			]
+		},
+		"content": {
+			"data": {
+				"path": "/d/results"
+			},
+			"item": {
+				"title": "{name}",
+				"highlight": "{= ${stock} > {{parameters.stockTreshold}} ? 'Success' : 'Error'}",
+				"description": "{nickName}",
+				"info": {
+					"value": "{deviceId}",
+					"state": "{= ${stock} > {{parameters.stockTreshold}} ? 'Success' : 'Error'}"
+				},
+				"actions": [
+					{
+						"type": "Custom",
+						"enabled": true,
+						"parameters" :{ "dst":"coachList","vars":{"id":"{id}"} }
+					}
+				]					
+			},
+			"maxItems": "{{parameters.maxItems}}",
+			"moreItems": {
+				"actions": [
+					{
+						"type": "Custom",
+						"enabled": true,
+						"parameters" :{ "dst":"coachList"}
+					}
+				]
+			}
+		}
+	}
+}

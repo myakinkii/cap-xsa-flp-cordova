@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+			
+			<core:Title text="{i18n>excerciseOrderGroup}" />
+			<Label required="true" text="{i18n>excerciseSetNum}" />
+			<StepInput editable="true" enabled="true" step="1" min="0"
+				value="{path: 'odata>setNum', type:'sap.ui.model.odata.type.Int' }"
+				description="" />
+			<Label required="true" text="{i18n>excerciseNum}" />
+			<StepInput editable="true" enabled="true" step="1" min="1"
+				value="{path: 'odata>exNum', type:'sap.ui.model.odata.type.Int' }"
+				description="" />
+			<Label required="true" text="{i18n>excerciseRepeat}" />
+			<StepInput editable="true" enabled="true" step="1" min="1"
+				value="{path: 'odata>repeat', type:'sap.ui.model.odata.type.Int' }"
+				description="" />
+				
+			<core:Title text="{i18n>excerciseSettingsGroup}" />	
+			<Label required="true" text="{i18n>excerciseName}" />
+			<Input fieldGroupIds="required" change="validateForm"
+				value="{path:'odata>name', type:'sap.ui.model.type.String', constraints:{minLength:5} }" />
+			<Label required="true" text="{i18n>excerciseResult}" />
+			<Input fieldGroupIds="required" change="validateForm"
+				value="{path:'odata>result', type:'sap.ui.model.type.String', constraints:{minLength:5} }" />
+			<Label text="{i18n>excerciseResultComment}" />
+			<Input value="{odata>resultComment}" />
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

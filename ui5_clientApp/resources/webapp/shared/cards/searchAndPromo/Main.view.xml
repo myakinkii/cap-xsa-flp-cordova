@@ -1,0 +1,18 @@
+<mvc:View controllerName="ru.fitrepublic.cards.searchAndPromo.Main" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+<VBox>
+	<SearchField width="100%" _class="sapUiTinyMarginBegin" search="searchPress"/>
+	<SlideTile class="tileLayout" transitionTime="250" displayTime="2500" tiles="{promo>/options}">
+			<GenericTile backgroundImage="{promo>image}" frameType="TwoByOne" press="promoPress">
+				<TileContent footer="{path:'promo>createdAt', formatter:'.formatDate' }">
+					<NewsContent 
+						contentText="{parts: [{path:'promo>parameters/vars/type'}], formatter:'.formatPromoText'}" 
+						subheader="{promo>text}" />
+				</TileContent>
+			</GenericTile>
+	</SlideTile>
+</VBox>
+</mvc:View>

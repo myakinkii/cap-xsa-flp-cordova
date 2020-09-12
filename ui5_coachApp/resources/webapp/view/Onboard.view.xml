@@ -1,0 +1,23 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Onboard" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<Page title="{i18n>onboardPageTitle}" showHeader="false">
+		<FlexBox height="100%" alignItems="Center" justifyContent="Center">
+			<items>
+				<VBox>
+					<Image width="100%" src="images/onboard.png" />
+					<ObjectListItem type="Active" press="onboardQR" 
+						icon="sap-icon://bar-code" 
+						intro="{i18n>onboardScanQRIntro}" 
+						title="{i18n>onboardScanQRTitle}" />
+					<!--<ObjectListItem type="Active" press="onboardMain" -->
+					<!--	icon="sap-icon://add-employee" -->
+					<!--	intro="{i18n>onboardMainIntro}" -->
+					<!--	title="{i18n>onboardMainTitle}" />-->
+				</VBox>
+			</items>
+		</FlexBox>
+	</Page>
+</mvc:View>

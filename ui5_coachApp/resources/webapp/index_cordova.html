@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+        <title>ui5client</title>
+        <script id="sap-ui-bootstrap"
+        	src="resources/sap-ui-core.js"
+            data-sap-ui-libs="sap.m"
+            data-sap-ui-theme="fitrepublic"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-resourceroots='{"ru.fitrepublic.ui5_coachApp":"./","ru.fitrepublic.shared": "./shared/"}'>
+        </script>
+        <script type="text/javascript">
+			var app = {
+				initialize: function() { document.addEventListener('deviceready', this.onDeviceReady.bind(this), false); },
+				onDeviceReady: function() {
+					var oScript = document.createElement("script");
+					oScript.text = "\
+                        sap.ui.getCore().attachInit(function() {\
+                        	new sap.m.Shell({\
+                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_coachApp\" })\
+                        	}).placeAt(\"content\");\
+                        });\
+					";
+					if (window.localStorage.getItem('darkTheme'))
+					oScript.text = "\
+                        sap.ui.getCore().attachInit(function() {\
+                        	sap.ui.getCore().applyTheme(\"fitrepublicdark\");\
+                        	new sap.m.Shell({\
+                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_coachApp\" })\
+                        	}).placeAt(\"content\");\
+                        });\
+					";
+					document.head.appendChild(oScript);
+				}
+			};
+			app.initialize();
+		</script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    <body class="sapUiBody" id="content"></body>
+</html>

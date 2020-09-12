@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:Reference Uri="/sap/bc/ui5_ui5/ui2/ushell/resources/sap/ushell/components/factsheet/vocabularies/UI.xml">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="/v2/admin/$metadata">
+		<edmx:Include Alias="AdminService" Namespace="AdminService"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/cs02/vocabularies/Org.OData.Aggregation.V1.xml">
+		<edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Capabilities.V1.xml">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2">
+		<edmx:Include Alias="vCard" Namespace="com.sap.vocabularies.Communication.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Core.V1.xml">
+		<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+		<edmx:Include Alias="CQP" Namespace="Org.OData.Measures.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml">
+		<edmx:Include Alias="Auth" Namespace="Org.OData.Authorization.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+		<edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="AdminService">
+			<Annotations Target="AdminService.Purchases">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;PURCHASE_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;PURCHASE_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="coach/name"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="owner/nickName"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>owner/nickName</PropertyPath>
+						<PropertyPath>gym/name</PropertyPath>
+						<PropertyPath>coach/name</PropertyPath>
+						<PropertyPath>state</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="type"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="owner/nickName"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="coach/name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="gym/name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="state"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="purchaseDate"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="expirationDate"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="quantity"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="cost"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.HeaderFacets">
+					<Collection>
+								
+						<!--<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">-->
+						<!--	<PropertyValue Property="Label" String="{@i18n>AddressFieldGroup}"/>-->
+						<!--	<PropertyValue Property="Target" AnnotationPath="@com.sap.vocabularies.UI.v1.FieldGroup#GYM"/>-->
+						<!--</Record>-->
+						<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+							<PropertyValue Property="Label" String="{@i18n>MainFieldGroup}"/>
+							<PropertyValue Property="Target" AnnotationPath="@com.sap.vocabularies.UI.v1.FieldGroup#MAIN"/>
+						</Record>						
+														
+						<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+							<PropertyValue Property="Label" String="{@i18n>TechnicalFieldGroup}"/>
+							<PropertyValue Property="Target" AnnotationPath="@com.sap.vocabularies.UI.v1.FieldGroup#TECHNICAL"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.FieldGroup" Qualifier="TECHNICAL">
+					<Record Type="com.sap.vocabularies.UI.v1.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="createdAt"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="createdBy"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="modifiedAt"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="modifiedBy"/>
+								</Record>								
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.FieldGroup" Qualifier="MAIN">
+					<Record Type="com.sap.vocabularies.UI.v1.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="type"/>
+								</Record>								
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="state"/>
+								</Record>								
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="quantity"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="cost"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="purchaseDate"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="expirationDate"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.FieldGroup" Qualifier="GYM">
+					<Record Type="com.sap.vocabularies.UI.v1.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="gym/name"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="gym/address_addressLine"/>
+								</Record>
+								<Record Type="com.sap.vocabularies.UI.v1.DataField">
+									<PropertyValue Property="Value" Path="gym/address_city"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.Facets">
+					<Collection>
+						<!--<Record Type="com.sap.vocabularies.UI.v1.CollectionFacet">-->
+						<!--	<PropertyValue Property="Label" String="{@i18n>DataFacet}"/>-->
+						<!--	<PropertyValue Property="Facets">-->
+						<!--		<Collection>-->
+						<!--			<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">-->
+						<!--				<PropertyValue Property="Label" String="{@i18n>MainFieldGroup}"/>-->
+						<!--				<PropertyValue Property="Target" AnnotationPath="@com.sap.vocabularies.UI.v1.FieldGroup#MAIN"/>-->
+						<!--			</Record>-->
+						<!--		</Collection>-->
+						<!--	</PropertyValue>-->
+						<!--</Record>-->
+						
+						<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+							<PropertyValue Property="Label" String="{@i18n>PaymentsFacet}"/>
+							<PropertyValue Property="Target" AnnotationPath="payments/@UI.LineItem#NAV"/>
+						</Record>
+						
+						<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+							<PropertyValue Property="Label" String="{@i18n>WorkoutsFacet}"/>
+							<PropertyValue Property="Target" AnnotationPath="workouts/@UI.LineItem#NAV"/>
+						</Record>
+						
+						<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+							<PropertyValue Property="Label" String="{@i18n>CoachBillingFacet}"/>
+							<PropertyValue Property="Target" AnnotationPath="coachBilling/@UI.LineItem#NAV"/>
+						</Record>
+						
+						<Record Type="com.sap.vocabularies.UI.v1.CollectionFacet">
+							<PropertyValue Property="Label" String="{@i18n>ReferenceFacets}"/>
+							<PropertyValue Property="Facets">
+								<Collection>
+									<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+										<PropertyValue Property="Label" String="{@i18n>ClientFacet}"/>
+										<PropertyValue Property="Target" AnnotationPath="owner/@UI.LineItem#NAV"/>
+									</Record>									
+									<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+										<PropertyValue Property="Label" String="{@i18n>CoachFacet}"/>
+										<PropertyValue Property="Target" AnnotationPath="coach/@UI.LineItem#NAV"/>
+									</Record>
+									<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">
+										<PropertyValue Property="Label" String="{@i18n>GymFacet}"/>
+										<PropertyValue Property="Target" AnnotationPath="gym/@UI.LineItem#NAV"/>
+									</Record>
+									<!--<Record Type="com.sap.vocabularies.UI.v1.ReferenceFacet">-->
+									<!--	<PropertyValue Property="Label" String="{@i18n>RefFieldGroup}"/>-->
+									<!--	<PropertyValue Property="Target" AnnotationPath="@com.sap.vocabularies.UI.v1.FieldGroup#REF"/>-->
+									<!--</Record>-->
+								</Collection>
+							</PropertyValue>
+						</Record>
+					</Collection>
+				</Annotation>	
+				
+				<Annotation Term="UI.FieldGroup" Qualifier="REF">
+					<Record>
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="UI.DataFieldWithNavigationPath">
+									<PropertyValue Property="Label" String="Coach" />
+									<PropertyValue Property="Value" Path="coach/name" />
+									<PropertyValue Property="Target" NavigationPropertyPath="coach" />
+								</Record>
+								<Record Type="UI.DataFieldWithNavigationPath">
+									<PropertyValue Property="Label" String="Gym" />
+									<PropertyValue Property="Value" Path="gym/name" />
+									<PropertyValue Property="Target" NavigationPropertyPath="gym" />
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="AdminService.Gyms">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;GYM_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;GYM_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="name"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="address_addressLine"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="id"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="address_city"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="address_addressLine"/>
+						</Record>						
+					</Collection>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="AdminService.Coaches">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;COACH_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;COACH_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="name"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="nickName"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>				
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="id"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="nickName"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="AdminService.Clients">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;CLIENT_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;CLIENT_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="nickName"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="age"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>				
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="id"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="nickName"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="age"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="AdminService.Payments">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;PAYMENT_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;PAYMENT_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="state"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="paymentDate"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>				
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="paymentDate"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="state"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="remainder"/>
+						</Record>						
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="cost"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="quantity"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>			
+			
+			<Annotations Target="AdminService.Workouts">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;WORKOUT_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;WORKOUT_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="status"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="timestamp"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>				
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="timestamp"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="status"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			
+			<Annotations Target="AdminService.CoachBilling">
+				<Annotation Term="UI.HeaderInfo">
+					<Record>
+						<PropertyValue Property="TypeName" String="{@i18n&gt;COACHBILLING_TYPE_NAME}"/>
+						<PropertyValue Property="TypeNamePlural" String="{@i18n&gt;COACHBILLING_TYPE_NAME_PL}"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="state"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="amount"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>				
+				<Annotation Term="UI.LineItem" Qualifier="NAV">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="state"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="amount"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="coach/name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="billingDate"/>
+						</Record>						
+					</Collection>
+				</Annotation>
+			</Annotations>			
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/type">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_type}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/quantity">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_quantity}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/cost">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_cost}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/state">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_state}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/purchaseDate">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_purchaseDate}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/expirationDate">
+				<Annotation Term="Common.Label" String="{@i18n>Purchase_expirationDate}"/>
+			</Annotations>			
+			
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/createdAt">
+				<Annotation Term="Common.Label" String="{@i18n>Technical_createdAt}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/createdBy">
+				<Annotation Term="Common.Label" String="{@i18n>Technical_createdBy}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/modifiedAt">
+				<Annotation Term="Common.Label" String="{@i18n>Technical_modifiedAt}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/modifiedBy">
+				<Annotation Term="Common.Label" String="{@i18n>Technical_modifiedBy}"/>
+			</Annotations>
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Coaches/name">
+				<Annotation Term="Common.Label" String="{@i18n>Coach_name}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Clients/nickName">
+				<Annotation Term="Common.Label" String="{@i18n>Client_nickName}"/>
+			</Annotations>			
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/name">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_name}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/address_countryCode">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_address_countryCode}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/address_city">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_address_city}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/address_zipCode">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_address_zipCode}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/address_addressLine">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_address_addressLine}"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/address_timezone">
+				<Annotation Term="Common.Label" String="{@i18n>Gym_address_timezone}"/>
+			</Annotations>			
+			
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.CoachesToGyms/coach_id">
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.CoachesToGyms/gym_id">
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>			
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

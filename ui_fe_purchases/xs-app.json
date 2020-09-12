@@ -1,0 +1,27 @@
+{
+	"welcomeFile": "index.html",
+	"authenticationMethod": "none",
+	"websockets": {
+		"enabled": true
+	},
+	"routes": [{
+		"source": "/v2/(.*)",
+		"target": "/v2/$1",
+		"destination": "srv_api",
+		"authenticationType": "none"
+	},{
+		"source": "/(.*)",
+		"localDir": "resources",
+		"authenticationType": "none",	
+		"replace": {
+			"pathSuffixes": [
+				"index.html"
+			],
+			"services": {
+				"sapui5_sb": {
+					"tag": "ui5"
+				}
+			}
+		}
+	}]
+}

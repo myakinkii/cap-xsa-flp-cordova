@@ -1,0 +1,56 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.MyMoney" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>mymoneyPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+
+	<List id="moneyList"
+		growing="true" 
+		growingThreshold="10"
+		items="{ 
+			path:'odata>/CoachBilling', 
+			parameters:{expand: 'purchase,purchase/owner'},
+			sorter:[
+				{path:'purchase/owner/nickName',group:true},
+				{path:'purchase/type',descending:true},
+				{path:'billingDate',descending:true}
+			],
+			groupHeaderFactory: '.getGroupHeader'
+		}">
+		<ObjectListItem
+			title="{i18n>billingAdded} {
+					path:'odata>billingDate', 
+					type:'sap.ui.model.type.DateTime', 
+					formatOptions:{ style:'short' }
+				} {i18n>billingFrom} {odata>purchase/owner/nickName}"
+			number="{odata>amount}"
+			numberUnit="{i18n>purchaseCurrency}"
+			type="Navigation" 
+			press="goToPurchase">
+			<firstStatus>
+				<ObjectStatus
+					text="{ path:'odata>state', formatter:'.formatState' }"
+					state="{= ${odata>state}==='D'?'Success':'Warning' }" />
+			</firstStatus>
+			<ObjectAttribute text="{ path:'odata>purchase/type', formatter:'.formatType' }" />
+			<ObjectAttribute text="" />
+		</ObjectListItem>
+	</List>	
+
+</Page>
+</mvc:View>

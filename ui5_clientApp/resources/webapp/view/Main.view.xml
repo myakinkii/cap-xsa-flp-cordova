@@ -1,0 +1,18 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Main" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:f="sap.f"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>mainPageTitle}" showHeader="false">
+	<Panel>
+		<f:GridContainer id="cardContainer">
+			<f:layout>
+				<f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
+			</f:layout>
+			<f:layoutS>
+				<f:GridContainerSettings rowSize="5rem" columnSize="25%" gap="0rem" />
+			</f:layoutS>
+		</f:GridContainer>	
+	</Panel>
+</Page>
+</mvc:View>

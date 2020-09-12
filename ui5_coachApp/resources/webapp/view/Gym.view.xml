@@ -1,0 +1,79 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Gym" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:forms="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	xmlns:core="sap.ui.core"
+	height="100%">
+	<ObjectPageLayout upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true">
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{odata>name}"
+							  objectSubtitle="{odata>address_addressLine}"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://building"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>gymPageTitle}"/>
+						</m:contentMiddle>
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+				</breadCrumbsLinks>					
+				<actions>
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://money-bills" text="{i18n>purchaseBuy}" press="makePurchase"/>-->
+					<!--<ObjectPageHeaderActionButton icon="sap-icon://action" text="action" tooltip="action"/>-->
+					<ObjectPageHeaderActionButton icon="sap-icon://synchronize" text="{i18n>genericRefresh}" press="refreshMyElementBinding" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>
+
+		<sections>
+
+			<ObjectPageSection titleUppercase="false" title="{i18n>gymSectionDescription}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>gymSectionDescriptionDetails}">
+						<m:Text text="{odata>description}" />
+					</ObjectPageSubSection>
+
+					<!--<ObjectPageSubSection title="{i18n>gymSectionDescriptionServices}">-->
+					<!--	<blocks>-->
+					<!--	</blocks>-->
+					<!--</ObjectPageSubSection>-->
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection titleUppercase="false" title="{i18n>gymSectionCoaches}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>gymSectionCoaches}" >
+						<blocks>
+							<m:List selectionChange="selectCoach" _mode="SingleSelectLeft" items="{odata>coaches}">
+								<m:ObjectListItem intro="{odata>coach/nickName}" title="{odata>coach/name}" _type="Navigation" _press="goToCoach" />
+							</m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			
+			<!--<ObjectPageSection titleUppercase="false" title="{i18n>gymSectionMaterials}">-->
+			<!--	<subSections>-->
+			<!--		<ObjectPageSubSection title="{i18n>gymSectionMaterialsPhotos}">-->
+			<!--			<blocks>-->
+			<!--				<m:Carousel />-->
+			<!--			</blocks>-->
+			<!--		</ObjectPageSubSection>-->
+			<!--	</subSections>-->
+			<!--</ObjectPageSection>			-->
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

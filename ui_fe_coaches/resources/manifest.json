@@ -1,0 +1,170 @@
+{
+	"_version": "1.5.0",
+	"sap.app": {
+		"id": "ru.fitrepublic.ui_fe_coaches",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "hanatemplates.basicSAPUI5ApplicationProject",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/v2/admin",
+				"type": "OData",
+				"settings": {
+					"annotations": [
+						"localAnnotations"
+					],
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"localAnnotations": {
+				"uri": "annotations/annotations.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "annotations/annotations.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ru.fitrepublic.ui_fe_coaches.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"defaultUpdateMethod": "PATCH",
+					"useBatch": true,
+					"refreshAfterChange": false
+				}
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			}
+		},
+        "extends": {
+            "extensions": {
+                "sap.ui.viewExtensions": {
+                    "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+                        "SmartFilterBarControlConfigurationExtension|Coaches": {
+                            "className": "sap.ui.core.Fragment",
+                            "fragmentName": "ru.fitrepublic.ui_fe_coaches.ext.fragments.CustomFilterExtension",
+                            "type": "XML"
+                        }
+                    },
+					"sap.suite.ui.generic.template.ObjectPage.view.Details": {
+						"BeforeFacet|Coaches|gyms::com.sap.vocabularies.UI.v1.LineItem::NAV": {
+							"className": "sap.ui.core.Fragment",
+							"fragmentName": "ru.fitrepublic.ui_fe_coaches.ext.fragments.DescriptionBreakout",
+							"type": "XML",
+							"sap.ui.generic.app": { "title": "{{BioFacet}}" }
+						}
+					}
+                },
+                "sap.ui.controllerExtensions": {
+                    "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+                        "controllerName": "ru.fitrepublic.ui_fe_coaches.ext.controllers.ListReportExtension",
+                        "sap.ui.generic.app": {
+                            "Coaches": {
+                                "EntitySet": "Coaches",
+                                "Actions": {
+                                    "showQrCode": {
+                                        "id": "showQrCode",
+                                        "text": "{{showQRActionButton}}",
+                                        "press": "showQrCode",
+                                        "determining": false,
+                                        "requiresSelection": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		}
+	},
+	"sap.ui.generic.app": {
+		"pages": [{
+			"entitySet": "Coaches",
+			"component": {
+				"settings": {
+					"smartTable": true,
+					"multiSelect": false
+				},
+				"name": "sap.suite.ui.generic.template.ListReport",
+				"list": true
+			},
+			"pages": [{
+				"entitySet": "Coaches",
+				"component": {
+					"name": "sap.suite.ui.generic.template.ObjectPage"
+				},
+				"pages": [{
+					"navigationProperty": "content",
+					"entitySet": "Content",
+					"component": {
+						"name": "sap.suite.ui.generic.template.ObjectPage",
+						"settings": {
+							"editableHeaderContent": true
+						}
+					}
+				}]
+			}]
+		}]
+	}
+}

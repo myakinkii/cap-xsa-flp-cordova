@@ -1,0 +1,214 @@
+{
+	"_version": "1.5.0",
+	"sap.app": {
+		"id": "ru.fitrepublic.ui5_clientApp",
+		"type": "application",
+		"i18n": "shared/i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "hanatemplates.basicSAPUI5ApplicationProject",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/client",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "ru.fitrepublic.ui5_clientApp.view.App",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.ui.layout": {},
+				"sap.ui.integration": {},
+				"sap.m": {},
+				"sap.uxap": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ru.fitrepublic.shared.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "ru.fitrepublic.ui5_clientApp.view",
+				"controlAggregation": "pages",
+				"controlId": "idAppControl"
+			},
+			"routes": [{
+				"name": "onboard",
+				"pattern": "onboard/{id}",
+				"target": ["onboard"]
+			},{
+				"name": "main",
+				"pattern": "",
+				"target": ["main"]
+			},{
+				"name": "search",
+				"pattern": "search/:q:",
+				"target": ["search"]
+			},{
+				"name": "gym",
+				"pattern": "gym/{id}",
+				"target": ["gym"]
+			},{
+				"name": "coach",
+				"pattern": "coach/{id}",
+				"target": ["coach"]
+			},{
+				"name": "purchases",
+				"pattern": "purchases",
+				"target": ["purchases"]
+			},{
+				"name": "money",
+				"pattern": "money",
+				"target": ["money"]
+			},{
+				"name": "purchase",
+				"pattern": "purchase/{id}/:section:",
+				"target": ["purchase"]
+			},{
+				"name": "workout",
+				"pattern": "workout/{id}",
+				"target": ["workout"]
+			},{
+				"name": "schedule",
+				"pattern": "schedule",
+				"target": ["schedule"]
+			},{
+				"name": "profile",
+				"pattern": "profile",
+				"target": ["profile"]
+			},{
+				"name": "chat",
+				"pattern": "chat/:id:",
+				"target": ["chat"]
+			}],
+			"targets":{
+				"onboard": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Onboard"
+				},
+				"main": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Main"
+				},
+				"search": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Search"
+				},
+				"gym": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Gym"
+				},
+				"coach": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Coach"
+				},
+				"purchases": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "MyPurchases"
+				},
+				"money": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "MyMoney"
+				},				
+				"purchase": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Purchase"
+				},
+				"workout": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Workout"
+				},
+				"schedule": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Schedule"
+				},
+				"profile": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Profile"
+				},
+				"chat": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Chat"
+				}
+			}
+		}
+	}
+}

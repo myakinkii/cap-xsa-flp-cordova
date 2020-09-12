@@ -1,0 +1,448 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+		<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="AdminService">
+			<EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+				<EntitySet Name="Clients" EntityType="AdminService.Clients"/>
+				<EntitySet Name="Coaches" EntityType="AdminService.Coaches"/>
+				<EntitySet Name="CoachesToGyms" EntityType="AdminService.CoachesToGyms"/>
+				<EntitySet Name="Gyms" EntityType="AdminService.Gyms"/>
+				<EntitySet Name="Purchases" EntityType="AdminService.Purchases"/>
+				<EntitySet Name="Workouts" EntityType="AdminService.Workouts"/>
+				<AssociationSet Name="Clients_coach" Association="AdminService.Clients_coach">
+					<End Role="Clients" EntitySet="Clients"/>
+					<End Role="Coaches" EntitySet="Coaches"/>
+				</AssociationSet>
+				<AssociationSet Name="Clients_purchase" Association="AdminService.Clients_purchase">
+					<End Role="Clients" EntitySet="Clients"/>
+					<End Role="Purchases" EntitySet="Purchases"/>
+				</AssociationSet>
+				<AssociationSet Name="CoachesToGyms_coach" Association="AdminService.CoachesToGyms_coach">
+					<End Role="CoachesToGyms" EntitySet="CoachesToGyms"/>
+					<End Role="Coaches" EntitySet="Coaches"/>
+				</AssociationSet>
+				<AssociationSet Name="CoachesToGyms_gym" Association="AdminService.CoachesToGyms_gym">
+					<End Role="CoachesToGyms" EntitySet="CoachesToGyms"/>
+					<End Role="Gyms" EntitySet="Gyms"/>
+				</AssociationSet>
+				<AssociationSet Name="Purchases_coach" Association="AdminService.Purchases_coach">
+					<End Role="Purchases" EntitySet="Purchases"/>
+					<End Role="Coaches" EntitySet="Coaches"/>
+				</AssociationSet>
+				<AssociationSet Name="Purchases_gym" Association="AdminService.Purchases_gym">
+					<End Role="Purchases" EntitySet="Purchases"/>
+					<End Role="Gyms" EntitySet="Gyms"/>
+				</AssociationSet>
+				<AssociationSet Name="Workouts_coach" Association="AdminService.Workouts_coach">
+					<End Role="Workouts" EntitySet="Workouts"/>
+					<End Role="Coaches" EntitySet="Coaches"/>
+				</AssociationSet>
+				<AssociationSet Name="Workouts_purchase" Association="AdminService.Workouts_purchase">
+					<End Role="Workouts" EntitySet="Workouts"/>
+					<End Role="Purchases" EntitySet="Purchases"/>
+				</AssociationSet>
+			</EntityContainer>
+			<EntityType Name="Clients">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7" Nullable="false"/>
+				<Property Name="durationHrs" Type="Edm.Int32"/>
+				<Property Name="status" Type="Edm.String"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="id" Type="Edm.Guid" Nullable="false"/>
+				<NavigationProperty Name="coach" Relationship="AdminService.Clients_coach" FromRole="Clients" ToRole="Coaches"/>
+				<NavigationProperty Name="purchase" Relationship="AdminService.Clients_purchase" FromRole="Clients" ToRole="Purchases"/>
+				<Property Name="rating" Type="Edm.Int32"/>
+				<Property Name="plan_authorId" Type="Edm.Guid"/>
+				<Property Name="plan_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="plan_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="report_authorId" Type="Edm.Guid"/>
+				<Property Name="report_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="report_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="comment_authorId" Type="Edm.Guid"/>
+				<Property Name="comment_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="comment_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="coach_id" Type="Edm.Guid"/>
+				<Property Name="client_id" Type="Edm.Guid"/>
+				<Property Name="purchase_id" Type="Edm.Guid"/>
+			</EntityType>
+			<EntityType Name="Coaches">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="deviceId" Type="Edm.String" MaxLength="64"/>
+				<Property Name="authToken" Type="Edm.String" MaxLength="64"/>
+				<Property Name="id" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="nickName" Type="Edm.String" MaxLength="20"/>
+				<Property Name="name" Type="Edm.String" MaxLength="100"/>
+				<NavigationProperty Name="gyms" Relationship="AdminService.CoachesToGyms_coach" FromRole="Coaches" ToRole="CoachesToGyms"/>
+			</EntityType>
+			<EntityType Name="CoachesToGyms">
+				<Key>
+					<PropertyRef Name="coach_id"/>
+					<PropertyRef Name="gym_id"/>
+				</Key>
+				<NavigationProperty Name="coach" Relationship="AdminService.CoachesToGyms_coach" FromRole="CoachesToGyms" ToRole="Coaches"/>
+				<NavigationProperty Name="gym" Relationship="AdminService.CoachesToGyms_gym" FromRole="CoachesToGyms" ToRole="Gyms"/>
+				<Property Name="coach_id" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="gym_id" Type="Edm.Guid" Nullable="false"/>
+			</EntityType>
+			<EntityType Name="Gyms">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="id" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="name" Type="Edm.String" MaxLength="100"/>
+				<NavigationProperty Name="coaches" Relationship="AdminService.CoachesToGyms_gym" FromRole="Gyms" ToRole="CoachesToGyms"/>
+				<Property Name="address_countryCode" Type="Edm.String" MaxLength="2"/>
+				<Property Name="address_city" Type="Edm.String" MaxLength="100"/>
+				<Property Name="address_zipCode" Type="Edm.String" MaxLength="6"/>
+				<Property Name="address_addressLine" Type="Edm.String" MaxLength="100"/>
+				<Property Name="address_timezone" Type="Edm.Int32"/>
+			</EntityType>
+			<EntityType Name="Purchases">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="id" Type="Edm.Guid" Nullable="false"/>
+				<NavigationProperty Name="coach" Relationship="AdminService.Purchases_coach" FromRole="Purchases" ToRole="Coaches"/>
+				<NavigationProperty Name="gym" Relationship="AdminService.Purchases_gym" FromRole="Purchases" ToRole="Gyms"/>
+				<Property Name="quantity" Type="Edm.Int32"/>
+				<Property Name="cost" Type="Edm.Int32"/>
+				<Property Name="purchaseDate" Type="Edm.DateTimeOffset" Precision="7" Nullable="false"/>
+				<Property Name="expirationDate" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="state" Type="Edm.String"/>
+				<Property Name="type" Type="Edm.String"/>
+				<Property Name="owner_id" Type="Edm.Guid"/>
+				<Property Name="coach_id" Type="Edm.Guid"/>
+				<Property Name="gym_id" Type="Edm.Guid"/>
+				<Property Name="chatChannel_channelId" Type="Edm.Guid"/>
+			</EntityType>
+			<EntityType Name="Workouts">
+				<Key>
+					<PropertyRef Name="id"/>
+				</Key>
+				<Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="7" Nullable="false"/>
+				<Property Name="durationHrs" Type="Edm.Int32"/>
+				<Property Name="status" Type="Edm.String"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+				<Property Name="id" Type="Edm.Guid" Nullable="false"/>
+				<NavigationProperty Name="coach" Relationship="AdminService.Workouts_coach" FromRole="Workouts" ToRole="Coaches"/>
+				<NavigationProperty Name="purchase" Relationship="AdminService.Workouts_purchase" FromRole="Workouts" ToRole="Purchases"/>
+				<Property Name="rating" Type="Edm.Int32"/>
+				<Property Name="plan_authorId" Type="Edm.Guid"/>
+				<Property Name="plan_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="plan_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="report_authorId" Type="Edm.Guid"/>
+				<Property Name="report_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="report_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="comment_authorId" Type="Edm.Guid"/>
+				<Property Name="comment_text" Type="Edm.String" MaxLength="256"/>
+				<Property Name="comment_timestamp" Type="Edm.DateTimeOffset" Precision="7"/>
+				<Property Name="coach_id" Type="Edm.Guid"/>
+				<Property Name="client_id" Type="Edm.Guid"/>
+				<Property Name="purchase_id" Type="Edm.Guid"/>
+			</EntityType>
+			<Association Name="Clients_coach">
+				<End Role="Clients" Type="AdminService.Clients" Multiplicity="*"/>
+				<End Role="Coaches" Type="AdminService.Coaches" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Coaches">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Clients">
+						<PropertyRef Name="coach_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Clients_purchase">
+				<End Role="Clients" Type="AdminService.Clients" Multiplicity="*"/>
+				<End Role="Purchases" Type="AdminService.Purchases" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Purchases">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Clients">
+						<PropertyRef Name="purchase_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="CoachesToGyms_coach">
+				<End Role="CoachesToGyms" Type="AdminService.CoachesToGyms" Multiplicity="*"/>
+				<End Role="Coaches" Type="AdminService.Coaches" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Coaches">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="CoachesToGyms">
+						<PropertyRef Name="coach_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="CoachesToGyms_gym">
+				<End Role="CoachesToGyms" Type="AdminService.CoachesToGyms" Multiplicity="*"/>
+				<End Role="Gyms" Type="AdminService.Gyms" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Gyms">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="CoachesToGyms">
+						<PropertyRef Name="gym_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Purchases_coach">
+				<End Role="Purchases" Type="AdminService.Purchases" Multiplicity="*"/>
+				<End Role="Coaches" Type="AdminService.Coaches" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Coaches">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Purchases">
+						<PropertyRef Name="coach_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Purchases_gym">
+				<End Role="Purchases" Type="AdminService.Purchases" Multiplicity="*"/>
+				<End Role="Gyms" Type="AdminService.Gyms" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Gyms">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Purchases">
+						<PropertyRef Name="gym_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Workouts_coach">
+				<End Role="Workouts" Type="AdminService.Workouts" Multiplicity="*"/>
+				<End Role="Coaches" Type="AdminService.Coaches" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Coaches">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Workouts">
+						<PropertyRef Name="coach_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Workouts_purchase">
+				<End Role="Workouts" Type="AdminService.Workouts" Multiplicity="*"/>
+				<End Role="Purchases" Type="AdminService.Purchases" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Purchases">
+						<PropertyRef Name="id"/>
+					</Principal>
+					<Dependent Role="Workouts">
+						<PropertyRef Name="purchase_id"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.EntityContainer/Clients">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Clients/createdAt">
+				<Annotation Term="Common.Label" String="Created On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Clients/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Clients/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Clients/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Coaches/createdAt">
+				<Annotation Term="Common.Label" String="Created On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Coaches/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Coaches/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Coaches/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/createdAt">
+				<Annotation Term="Common.Label" String="Created On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Gyms/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.EntityContainer/Purchases">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/createdAt">
+				<Annotation Term="Common.Label" String="Created On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Purchases/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.EntityContainer/Workouts">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Workouts/createdAt">
+				<Annotation Term="Common.Label" String="Created On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Workouts/createdBy">
+				<Annotation Term="Common.Label" String="Created By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="Core.Immutable" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Workouts/modifiedAt">
+				<Annotation Term="Common.Label" String="Changed On"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="AdminService.Workouts/modifiedBy">
+				<Annotation Term="Common.Label" String="Changed By"/>
+				<Annotation Term="Core.Computed" Bool="true"/>
+				<Annotation Term="Core.Description" String="User's unique ID"/>
+				<Annotation Term="UI.HiddenFilter" Bool="true"/>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

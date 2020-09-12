@@ -1,0 +1,50 @@
+{
+	"sap.app": {
+		"id": "ru.fitrepublic.cards.searchAndPromo",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "ru.fitrepublic.cards.searchAndPromo.Main",
+			"type": "XML",
+			"async": true
+		}
+	},	
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "Component",
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				}
+			}
+		},		
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"actions": [
+				{
+					"type": "Custom",
+					"parameters": { "dst":"search"}
+				}
+			]
+		}
+	}
+}
